@@ -3987,7 +3987,7 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
     const int nHeight = pindexPrev->nHeight + 1;
 
     //If this is a reorg, check that it is not too deep
-    int nMaxReorgDepth = 20;
+    int nMaxReorgDepth = 50;
     int nMinReorgPeers = 4;
     int nMinReorgAge = 60 * 60 * 12; // 12 hours
     bool fGreaterThanMaxReorg = chainActive.Height() - (nHeight - 1) >= nMaxReorgDepth;

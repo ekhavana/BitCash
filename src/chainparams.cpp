@@ -309,6 +309,9 @@ copy merkle root
                 { 600000, uint256S("0x270e3019eaf69f2dd266951394462c74f8ab8d23f661708771ae75ce76d80000")},
                 { 700000, uint256S("0xf693e62650cc45cc4b6ec31d7455675209679494c0c2447db2d2b96f524fa103")},
                 { 780000, uint256S("0xbb211ea277b37e80ea293757f7b14e1320fcbfd6279d8b6258f41bea2d9a6865")},
+                { 899785, uint256S("0xf6a438ffa4b0391f16fc0caa29a0eb8aba4655fd92fec97241c8034d512ebf99")},
+                { 899810, uint256S("0x8e8857c8934ba95117e3e6a54fb35d427ebcc5e205cd6fcdc2eea16c64f20473")},
+
             }
         };
 
