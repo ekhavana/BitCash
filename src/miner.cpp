@@ -377,6 +377,20 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlockWithScriptPubKey(c
     nLastBlockTx = nBlockTx;
     nLastBlockWeight = nBlockWeight;
 
+    //fix problem with nickname transaction which are already mined in the mempool->erase transaction which do not pass CheckTransaction from the block template
+    for (unsigned int i = pblock->vtx.size()-1; i>0; i--) {//start from transaction 1 not 0, because transaction 0 is the coinbase placeholder
+
+        CTransaction tx(*pblock->vtx[i]);
+
+        CValidationState state;
+
+        if (!CheckTransaction(tx, state)){
+            LogPrintf("CreateNewBlockWithScriptPubKey CheckTransaction rejected the transaction: msg: %s Txid: %s\n", FormatStateMessage(state), tx.GetHash().ToString());
+            pblock->vtx.erase( pblock->vtx.begin() + i);
+        }
+
+    }
+
     CalculateFeesForBlock();
 
     // Create coinbase transaction.
@@ -423,6 +437,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlockWithScriptPubKey(c
     pblocktemplate->vTxSigOpsCost[0] = WITNESS_SCALE_FACTOR * GetLegacySigOpCount(*pblock->vtx[0]);
 
     ConvertCurrenciesForBlockTemplate();
+
     pblocktemplate->vchCoinbaseCommitment = GenerateCoinbaseCommitment(*pblock, pindexPrev, chainparams.GetConsensus());
 
     CValidationState state;
