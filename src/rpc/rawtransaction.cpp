@@ -78,8 +78,6 @@ void TxToUnivWithWallet(const CWallet* pwallet,const CTransaction& tx, const uin
     entry.pushKV("weight", GetTransactionWeight(tx));
     entry.pushKV("locktime", (int64_t)tx.nLockTime);
 
-    entry.pushKV("vinsize", tx.vin.size());
-
     UniValue vin(UniValue::VARR);
     for (unsigned int i = 0; i < tx.vin.size(); i++) {
 
