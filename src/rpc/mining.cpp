@@ -806,14 +806,14 @@ static UniValue submitblock(const JSONRPCRequest& request)
     bool fAccepted = ProcessNewBlock(Params(), blockptr, true, nullptr,false);
     UnregisterValidationInterface(&sc);
     if (fBlockPresent) {
-        if (fAccepted && !sc.found) {
+/*        if (fAccepted && !sc.found) {
             return "duplicate-inconclusive";
-        }
+        }*/
         return "duplicate";
     }
-    if (!sc.found) {
+/*    if (!sc.found) {
         return "inconclusive";
-    }
+    }*/
     return BIP22ValidationResult(sc.state);
 }
 

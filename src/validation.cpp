@@ -3991,7 +3991,7 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
     int nMinReorgPeers = 4;
     int nMinReorgAge = 60 * 60 * 12; // 12 hours
     bool fGreaterThanMaxReorg = chainActive.Height() - (nHeight - 1) >= nMaxReorgDepth;
-    if (fGreaterThanMaxReorg && g_connman) {
+/*    if (fGreaterThanMaxReorg && g_connman) {
         int nCurrentNodeCount = g_connman->GetNodeCount(CConnman::CONNECTIONS_ALL);
         bool bIsCurrentChainCaughtUp = (GetTime() - pindexPrev->nTime) <= nMinReorgAge;
         if ((nCurrentNodeCount >= nMinReorgPeers) && bIsCurrentChainCaughtUp)
@@ -3999,7 +3999,7 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
                              error("%s: forked chain older than max reorganization depth (height %d), with connections (count %d), and caught up with active chain (%s)",
                                    __func__, nHeight, nCurrentNodeCount, bIsCurrentChainCaughtUp ? "true" : "false"),
                              REJECT_INVALID, "bad-fork-prior-to-maxreorgdepth");
-    }
+    }*/
 
 
     // Check proof of work
@@ -4373,6 +4373,7 @@ bool ProcessNewBlock(
                     CAmount amount = (__int128_t)tx.vout[j].nValueBitCash * (__int128_t)pricerate2 / (__int128_t)COIN;
                     if (tx.vout[j].nValue != amount ) {
                         LogPrintf("Inputcurrency: %i \n",inputcurrency);
+                        LogPrintf("Pricerate2: %i \n",pricerate2);
                         LogPrintf("Tx to change in ProcessNewBlock: %s \n",tx.GetHash().ToString());
                         LogPrintf("Convert BitCash into Dollars: %s new: %s \n",FormatMoney(tx.vout[j].nValue),FormatMoney(amount));
                         tx.vout[j].nValue = amount;
@@ -4453,7 +4454,6 @@ bool ProcessNewBlock(
         }
     }
 
-
     {
         CBlockIndex *pindex = nullptr;
         if (fNewBlock) *fNewBlock = false;
@@ -4470,9 +4470,14 @@ bool ProcessNewBlock(
                 validate,
                 validate);
 
+
+        if (!ret) {
+            LogPrintf("CheckBlock FAILED\n");
+        }
         LOCK(cs_main);
 
         if (ret) {
+            LogPrintf("CheckBlock OKAY\n");
             // Store to disk
             ret = g_chainstate.AcceptBlock(
                     pblocknew,
@@ -4487,15 +4492,20 @@ bool ProcessNewBlock(
 //        g_chainstate.CheckBlockIndex(chainparams.GetConsensus());
         if (!ret) {
             GetMainSignals().BlockChecked(*pblocknew, state);
+            LogPrintf("AcceptBlock FAILED: %s \n",FormatStateMessage(state));
             return error("%s: AcceptBlock FAILED: %s", __func__, FormatStateMessage(state));
+        } else {
+            LogPrintf("AcceptBlock OKAY: \n");
         }
     }
 
     NotifyHeaderTip();
 
     CValidationState state; // Only used to report errors, not invalidity - ignore it
-    if (!ActivateBestChain(state, chainparams, pblocknew/*, sample*/))
+    if (!ActivateBestChain(state, chainparams, pblocknew/*, sample*/)) {
+            LogPrintf("ActivateBestChain failed %s\n",FormatStateMessage(state));
         return error("%s: ActivateBestChain failed: %s", __func__, FormatStateMessage(state));
+    } else             LogPrintf("ProcessNewBlock Okay: \n");
 
     return true;
 }
