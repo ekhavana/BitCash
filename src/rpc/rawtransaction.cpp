@@ -82,22 +82,21 @@ void TxToUnivWithWallet(const CWallet* pwallet,const CTransaction& tx, const uin
 
     UniValue vin(UniValue::VARR);
     for (unsigned int i = 0; i < tx.vin.size(); i++) {
-std::cout << "i"<< i<< std::endl;
+
         const CTxIn& txin = tx.vin[i];
         UniValue in(UniValue::VOBJ);
         if (txin.isnickname) {
-std::cout << "nickname"<< std::endl;
+
             in.pushKV("nickname", txin.nickname);           
             in.pushKV("address", EncodeDestinationHasSecondKey(GetDestinationforNickname(txin.address, txin.isnonprivatenickname, txin.nicknamehasviewkey, txin.viewpubkey)));
 
             in.pushKV("nicknamesig", HexStr(txin.nicknamesig));
         } else
         if (tx.IsCoinBase()){
-std::cout << "coinbase"<< std::endl;
+
             in.pushKV("coinbase", HexStr(txin.scriptSig.begin(), txin.scriptSig.end()));
-}
+        }
         else {
-std::cout << "txid"<< std::endl;
             in.pushKV("txid", txin.prevout.hash.GetHex());
             in.pushKV("vout", (int64_t)txin.prevout.n);
 
