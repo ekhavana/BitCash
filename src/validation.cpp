@@ -3991,7 +3991,7 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
     int nMinReorgPeers = 4;
     int nMinReorgAge = 60 * 60 * 12; // 12 hours
     bool fGreaterThanMaxReorg = chainActive.Height() - (nHeight - 1) >= nMaxReorgDepth;
-/*    if (fGreaterThanMaxReorg && g_connman) {
+    if (fGreaterThanMaxReorg && g_connman) {
         int nCurrentNodeCount = g_connman->GetNodeCount(CConnman::CONNECTIONS_ALL);
         bool bIsCurrentChainCaughtUp = (GetTime() - pindexPrev->nTime) <= nMinReorgAge;
         if ((nCurrentNodeCount >= nMinReorgPeers) && bIsCurrentChainCaughtUp)
@@ -3999,7 +3999,7 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
                              error("%s: forked chain older than max reorganization depth (height %d), with connections (count %d), and caught up with active chain (%s)",
                                    __func__, nHeight, nCurrentNodeCount, bIsCurrentChainCaughtUp ? "true" : "false"),
                              REJECT_INVALID, "bad-fork-prior-to-maxreorgdepth");
-    }*/
+    }
 
 
     // Check proof of work
