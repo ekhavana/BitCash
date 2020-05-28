@@ -532,7 +532,7 @@ Item {
         anchors.topMargin: 1
         currentIndex: 0
         visible: false
-        model: ["stratum+tcp://eu.bsod.pw:2564", "stratum+tcp://us.bsod.pw:2564", "stratum+tcp://asia.bsod.pw:2564", "stratum+tcp://x25x.mine.zergpool.com:3225", "stratum+tcp://x25x.mine.zpool.ca:3423", "stratum+tcp://us.miner.tokyo:3257", "stratum+tcp://asia.miner.tokyo:3257", "stratum+tcp://europe.miner.tokyo:3257", "stratum+tcp://ru.miner.tokyo:3257"]
+        model: ["stratum+tcp://pool.bsod.pw:2564", "stratum+tcp://eu.bsod.pw:2564", "stratum+tcp://us.bsod.pw:2564", "stratum+tcp://asia.bsod.pw:2564", "stratum+tcp://ru.bsod.pw:2564", "stratum+tcp://x25x.mine.zergpool.com:3225", "stratum+tcp://x25x.mine.zpool.ca:3423", "stratum+tcp://us.miner.tokyo:3257", "stratum+tcp://asia.miner.tokyo:3257", "stratum+tcp://europe.miner.tokyo:3257", "stratum+tcp://ru.miner.tokyo:3257"]
     }
 
     property alias infowhitebox: infowhitebox
@@ -563,7 +563,7 @@ Item {
         anchors.leftMargin: 36
         anchors.rightMargin: 36
         anchors.topMargin: 36
-        text: qsTr("Welcome to Bitcash mining!  The one click solution for mining!  \n\nBefore we begin, please take note of a few requirements for mining:\n\nNvidia video card\n980 model or later (minimum 3gb vram)\n\nNow select your pool, click start mining and begin receiving bitcash rewards directly to your wallet!  \n\nThat's it!  Leave you wallet open while mining and enjoy!  \n\nThe algo your mining is X16RV2, and your miner is Trex miner which has been integrated into the bitcash wallet.\n\nAny questions please visit us on discord https://discord.gg/t2MdnWQ")
+        text: qsTr("Welcome to Bitcash mining!  The one click solution for mining!  \n\nBefore we begin, please take note of a few requirements for mining:\n\nNvidia video card\n980 model or later (minimum 3gb vram)\n\nNow select your pool, click start mining and begin receiving bitcash rewards directly to your wallet!  \n\nThat's it!  Leave you wallet open while mining and enjoy!  \n\nThe algo your mining is x25x, and your miner is T-rex miner which has been integrated into the bitcash wallet.\n\nAny questions please visit us on discord https://discord.gg/t2MdnWQ")
         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
         font.pixelSize: 14
         font.family: "Montserrat"
