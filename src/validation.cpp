@@ -4351,7 +4351,8 @@ bool ProcessNewBlock(
                 CBlockIndex* blockindex = nullptr;
                 //does fail if we referring to a tx input in the same block, but this is no longer allows since the stable coin fork
                 if (!GetTransaction(tx.vin[j].prevout.hash, txfound, Params().GetConsensus(), hash_block, true, blockindex)) {
-                    return error("%s: AcceptBlock FAILED: %s", __func__, "Could not get input transaction");
+                    LogPrintf("ProcessNewBlock FAILED: Could not get input transaction");
+                    return error("%s: ProcessNewBlock FAILED: %s", __func__, "Could not get input transaction");
                 }
                 inputcurrency = txfound->vout[tx.vin[j].prevout.n].currency;
                 break;
@@ -4472,7 +4473,7 @@ bool ProcessNewBlock(
 
 
         if (!ret) {
-            LogPrintf("CheckBlock FAILED\n");
+            LogPrintf("CheckBlock FAILED: %s \n",FormatStateMessage(state));
         }
         LOCK(cs_main);
 
