@@ -481,7 +481,7 @@ Item {
     signal backupwalletfileSignal()
     signal backupBtnSignal()
     signal tradingBtnSignal()
-    signal importkeySignal(string key)
+    signal importkeySignal(string key, bool fromwebwallet)
     signal deletepaymentsignal(string idstr)
     signal deleteordersignal(string idstr)
     signal abandonTxSignal(string txidtext)
@@ -981,7 +981,7 @@ Item {
         id: backupwallet
         onPrintpaperwalletSignalintern: printpaperwalletSignal()
         onBackupwalletfileSignalintern: backupwalletfileSignal()
-        onImportkeySignalintern: importkeySignal(key)
+        onImportkeySignalintern: importkeySignal(key, fromwebwallet)
     }
 
     Trading

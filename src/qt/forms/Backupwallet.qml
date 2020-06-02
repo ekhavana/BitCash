@@ -21,7 +21,7 @@ Item {
 
     signal printpaperwalletSignalintern()
     signal backupwalletfileSignalintern()
-    signal importkeySignalintern(string key)
+    signal importkeySignalintern(string key, bool fromwebwallet)
 
     function setpaperwalletaddressesintern(address,privatekey) {
         publicaddressEdit.text=address
@@ -565,7 +565,7 @@ Rectangle{
 
                 Mybutton {
                     id: restoreBtn
-                    width: 241
+                    width: 271
                     height: 44
                     text: qsTr("Restore from private key")
                     font.weight: Font.DemiBold
@@ -577,13 +577,32 @@ Rectangle{
                     anchors.topMargin: 20
                     font.capitalization: Font.MixedCase
                     font.family: "Montserrat SemiBold"
-                    onClicked: importkeySignalintern(privatekeyEditpaste.text)
+                    onClicked: importkeySignalintern(privatekeyEditpaste.text,false)
+                    iconname: "../res/assets/Miscellaneous/import-icon.png"
+                }
+
+                Mybutton {
+                    id: restoreBtn2
+                    width: 375
+                    height: 44
+                    text: qsTr("Restore from web wallet/mobile wallet")
+                    font.weight: Font.DemiBold
+                    font.pixelSize: 14
+                    leftPadding: 42
+                    anchors.left: parent.left
+                    anchors.leftMargin: 30
+                    anchors.top: restoreBtn.bottom
+                    anchors.topMargin: 20
+                    font.capitalization: Font.MixedCase
+                    font.family: "Montserrat SemiBold"
+                    onClicked: importkeySignalintern(privatekeyEditpaste.text,true)
                     iconname: "../res/assets/Miscellaneous/import-icon.png"
                 }
 
                 ProgressBar {
                     id: progressBar
-                    y: 433
+                    anchors.top: restoreBtn2.bottom
+                    anchors.topMargin: 30
                     to: 100
                     anchors.right: parent.right
                     anchors.rightMargin: 30

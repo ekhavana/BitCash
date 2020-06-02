@@ -1362,7 +1362,7 @@ bool BitcashGUI::nativeEvent(const QByteArray& eventType, void* message, long* r
 extern CCriticalSection cs_main;
 bool inimporting = false;
 //The user clicked the Button to restore a backed up private key
-void BitcashGUI::importKeyBtnClicked(QString keystr) 
+void BitcashGUI::importKeyBtnClicked(QString keystr, bool fromwebwallet) 
 {
     CWallet* pwallet = GetWallet("");
     if (!pwallet) return;
@@ -1398,6 +1398,15 @@ void BitcashGUI::importKeyBtnClicked(QString keystr)
         CKeyID vchAddress = pubkey.GetID();
         {
             pwallet->MarkDirty();
+
+            CTxDestination dest;
+            if (fromwebwallet)
+            {    
+                dest = GetDestinationForKey(pubkey, OutputType::WITHVIEWKEY, key.GetViewKeyForPrivateKey().GetPubKey());
+            } else {
+                dest = GetDestinationForKey(pubkey, pwallet->m_default_address_type);
+            }
+            pwallet->SetAddressBook(dest, "", "receive");
             // We don't know which corresponding address will be used; label them all
             for (const auto& dest : GetAllDestinationsForKey(pubkey)) {
                 pwallet->SetAddressBook(dest, "", "receive");
@@ -1426,7 +1435,7 @@ void BitcashGUI::importKeyBtnClicked(QString keystr)
             pwallet->SetLabelDestination(pubkey, "");
             //update GUI
             QVariant address, nick, returnedValue;
-            CTxDestination dest = PubKeyToDestination(pubkey);
+
             std::string addr = EncodeDestination(dest, pubkey);
             address = QString::fromStdString(addr);
             nick = QString::fromStdString(GetNicknameForAddress(pubkey, GetNonPrivateForDestination(dest), GetHasViewKeyForDestination(dest)));
@@ -3295,8 +3304,8 @@ BitcashGUI::BitcashGUI(interfaces::Node& node, const PlatformStyle *_platformSty
                       this, SLOT(createnewpaperwallet()));
     QObject::connect(qmlrootitem, SIGNAL(printpaperwalletSignal()),
                       this, SLOT(PrintPaperWalletClicked()));                                         
-    QObject::connect(qmlrootitem, SIGNAL(importkeySignal(QString)),
-                      this, SLOT(importKeyBtnClicked(QString)));
+    QObject::connect(qmlrootitem, SIGNAL(importkeySignal(QString,bool)),
+                      this, SLOT(importKeyBtnClicked(QString,bool)));
     QObject::connect(qmlrootitem, SIGNAL(backupBtnSignal()),
                       this, SLOT(printMainWalletClicked()));
     QObject::connect(qmlrootitem, SIGNAL(tradingBtnSignal()),

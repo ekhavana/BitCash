@@ -222,7 +222,7 @@ public Q_SLOTS:
     void repairSyncIssuesClicked();
     void importKeyClicked();
     bool UserKnowsPassword();
-    void importKeyBtnClicked(QString keystr);
+    void importKeyBtnClicked(QString keystr, bool fromwebwallet);
     void resendWalletTxesClicked();
     void rescanClicked(); 
     QImage GetbillbackImage();
