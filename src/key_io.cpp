@@ -359,14 +359,14 @@ CTxDestination DecodeDestination(const std::string& strinput, const CChainParams
     bool isdeposit = false;
     std::string str = strinput;
 
-    if (str.length()>=7 && str[0]=='g' && str[1]=='o' && str[2]=='l' && str[3]=='d' && str[4]=='@') {
+/*    if (str.length()>=7 && str[0]=='g' && str[1]=='o' && str[2]=='l' && str[3]=='d' && str[4]=='@') {
         currency = 2;
         str.erase(0, 5);
     } else
     if (str.length()>=7 && str[0]=='d' && str[1]=='o' && str[2]=='l' && str[3]=='l' && str[4]=='a' && str[5]=='r' && str[6]=='@') {
         currency = 1;
         str.erase(0, 7);
-    } else
+    } else*/
     if (str.length()>=8 && str[0]=='b' && str[1]=='i' && str[2]=='t' && str[3]=='c' && str[4]=='a' && str[5]=='s' && str[6]=='h' && str[7]=='@') {
         currency = 0;
         str.erase(0, 8);
