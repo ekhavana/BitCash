@@ -98,6 +98,7 @@ struct Params {
     uint64_t GPUMINERTIME;
     uint64_t GOLDTIME;
     uint64_t X25XTIME;
+    uint64_t DEACTIVATEDOLLAR;
 };
 } // namespace Consensus
 

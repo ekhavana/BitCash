@@ -193,6 +193,8 @@ bool CheckTransaction(const CTransaction& tx, CValidationState &state, bool fChe
 
     for (const auto& txout : tx.vout)
     {
+        if (txout.currency > 0 && tx.nVersion >= 9) return state.DoS(100, false, REJECT_INVALID, "Transactions which create Dollar or Gold are deactivated for now.");
+
         if (txout.currency >= 3) return state.DoS(100, false, REJECT_INVALID, "bad-txns-vout-currency-not-supported");
 
         if (txout.referenceline.length()>1000)

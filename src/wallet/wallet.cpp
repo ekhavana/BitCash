@@ -4879,6 +4879,13 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CTransac
                         strFailReason = _("Transactions to a Gold account are not yet allowed.");
                         return false;
                     }
+
+                    if (recipient.currency > 0) {
+                        strFailReason = _("Transactions to a Dollar or a Gold account are not allowed at the moment.");
+                        return false;
+                    }
+
+
                     if (!FillTxOutForTransaction(   txout, recipient.cpkey, recipient.refline, recipient.currency, recipient.nonprivate, 
                                                     recipient.hasviewkey, recipient.viewpubkey, txNew.nVersion >= 6, txNew.nVersion >= 7, checkagainstprivkey, secret)){
                         strFailReason = _("Can not get private key");

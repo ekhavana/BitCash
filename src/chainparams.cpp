@@ -141,6 +141,7 @@ public:
         consensus.GPUMINERTIME = 1570356000;//Time of fork which activates the GPU miner again
         consensus.GOLDTIME = 1573984800;//Time of BitCash gold activation
         consensus.X25XTIME = 1583056800;//Time of X25X fork
+        consensus.DEACTIVATEDOLLAR = 1593331200;//Time of fork to deactivate new Dollar transactions 
 
         // The best chain should have at least this much work.                                                
         consensus.nMinimumChainWork = uint256S("0x00");
@@ -371,6 +372,7 @@ public:
         consensus.GPUMINERTIME = 1569872820;//Time of fork which activates the GPU miner again
         consensus.GOLDTIME = 1573984800;//Time of BitCash gold activation
         consensus.X25XTIME = 1581238003;//Time of X25X fork
+        consensus.DEACTIVATEDOLLAR = 1592915126;//Time of fork to deactivate new Dollar transactions 
 
         // The best chain should have at least this much work.
         consensus.nMinimumChainWork = uint256S("0x00");
@@ -546,6 +548,7 @@ public:
         consensus.GPUMINERTIME = 1569872820;//Time of fork which activates the GPU miner again
         consensus.GOLDTIME = 1573984800;//Time of BitCash gold activation
         consensus.X25XTIME = 1581238003;//Time of X25X fork
+        consensus.DEACTIVATEDOLLAR = 1592915126;//Time of fork to deactivate new Dollar transactions 
 
         // The best chain should have at least this much work.
         consensus.nMinimumChainWork = uint256S("0x00");

@@ -668,6 +668,14 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
         LogPrintf("Version 7 transactions are not yet accepted.\n");
         return state.Invalid(false, REJECT_INVALID, "Old tx version");
     }
+    if (tx.nVersion <= 8 && time(nullptr) > Params().GetConsensus().DEACTIVATEDOLLAR - 5 * 60) {
+        LogPrintf("Version 8 transactions are no longer accepted.\n");
+        return state.Invalid(false, REJECT_INVALID, "Old tx version");
+    }
+    if (tx.nVersion == 9 && time(nullptr) < Params().GetConsensus().DEACTIVATEDOLLAR + 2 * 60) {
+        LogPrintf("Version 9 transactions are not yet accepted.\n");
+        return state.Invalid(false, REJECT_INVALID, "Old tx version");
+    }
     
 
 

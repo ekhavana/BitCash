@@ -110,7 +110,7 @@ CMutableTransaction::CMutableTransaction() : nVersion(CTransaction::CURRENT_VERS
 
 {
     //Do not create transactions with hash in the coinbase until 5 minutes before the fork
-    if (!ExistParams() || time(nullptr) < Params().GetConsensus().GPUMINERTIME - 5 * 60) nVersion = CTransaction::OLD_VERSION;
+    if (!ExistParams() || time(nullptr) < Params().GetConsensus().DEACTIVATEDOLLAR - 5 * 60) nVersion = CTransaction::OLD_VERSION;
 }
 CMutableTransaction::CMutableTransaction(const CTransaction& tx) : vin(tx.vin), vout(tx.vout), nVersion(tx.nVersion), nLockTime(tx.nLockTime), haspricerange(tx.haspricerange), minprice(tx.minprice), maxprice(tx.maxprice), hashashinfo(tx.hashashinfo), hashforpriceinfo(tx.hashforpriceinfo) {}
 
