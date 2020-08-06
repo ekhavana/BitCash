@@ -3663,6 +3663,13 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
     } 
 
 
+    if (block.nTime > consensusParams.DEACTIVATEPRICESERVERS && (block.nPriceInfo.priceTime != 0 || block.nPriceInfo2.priceTime != 0 || block.nPriceInfo3.priceTime != 0))
+    {
+        return state.DoS(100, false, REJECT_INVALID, "bad-price-time", false, "Timestamp for price information is not zero.");
+    } else 
+    if (block.nTime <= consensusParams.DEACTIVATEPRICESERVERS)
+    {
+
     if (block.nTime > consensusParams.STABLETIME && 
         (!(block.nPriceInfo.priceTime == block.nTime || (block.nPriceInfo.priceTime > block.nTime && block.nPriceInfo.priceTime <= block.nTime + MAX_PRICETIME_DIFFERENCE) 
                                                       || (block.nPriceInfo.priceTime < block.nTime && block.nPriceInfo.priceTime + MAX_PRICETIME_DIFFERENCE >= block.nTime)))) {
@@ -3692,6 +3699,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
         LogPrintf("nTime %f \n", block.nTime);
         LogPrintf("consensusParams.STABLETIME %f \n", consensusParams.STABLETIME);
         return state.DoS(100, false, REJECT_INVALID, "bad-price-time", false, "Timestamp for price information is not in valid time range.");
+    }
     }
 
     if (!hasconvertedpubkeys) {
@@ -3723,10 +3731,28 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
         return state.DoS(100, false, REJECT_INVALID, "bad-negative-price3", false, "Price information with negative value."); 
     }
 
-    if (block.nTime > consensusParams.STABLETIME) {
+    if (block.nTime > consensusParams.DEACTIVATEPRICESERVERS)
+    {
+        if ((block.priceSig.size() != 0 || block.priceSig2.size() != 0 || block.priceSig3.size() != 0)) {
+            return state.DoS(100, false, REJECT_INVALID, "bad-price-signature", false, "The signature for the price information must be empty.");
+        }
+        if (block.nPriceInfo.prices[0] != 0.02 * COIN ||
+        block.nPriceInfo.prices[1] != 0.02 * COIN ||
+        block.nPriceInfo.prices[2] != 2000 * COIN ||
+        block.nPriceInfo2.prices[0] != 0.02 * COIN ||
+        block.nPriceInfo2.prices[1] != 0.02 * COIN ||
+        block.nPriceInfo2.prices[2] != 2000 * COIN ||
+        block.nPriceInfo3.prices[0] != 0.02 * COIN ||
+        block.nPriceInfo3.prices[1] != 0.02 * COIN ||
+        block.nPriceInfo3.prices[2] != 2000 * COIN) {
+            return state.DoS(100, false, REJECT_INVALID, "bad-price", false, "The price information is wrong.");
+        }
+    }
+
+    if (block.nTime > consensusParams.STABLETIME && block.nTime <= consensusParams.DEACTIVATEPRICESERVERS) {
         int i1 = 0;
- 	int i2 = 0;
-	int i3 = 0;
+        int i2 = 0;
+        int i3 = 0;
         if (pricepubkey1.Verify(pricehash, block.priceSig)) i1 = 1;else
         if (pricepubkey2.Verify(pricehash, block.priceSig)) i1 = 2;else
         if (pricepubkey3.Verify(pricehash, block.priceSig)) i1 = 3;else

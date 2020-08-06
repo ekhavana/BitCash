@@ -99,6 +99,7 @@ struct Params {
     uint64_t GOLDTIME;
     uint64_t X25XTIME;
     uint64_t DEACTIVATEDOLLAR;
+    uint64_t DEACTIVATEPRICESERVERS;
 };
 } // namespace Consensus
 

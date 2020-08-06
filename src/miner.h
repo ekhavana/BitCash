@@ -208,6 +208,8 @@ private:
 
     void CalculateFeesForBlock();
 
+    bool AddPriceInformation(CBlock *pblock);
+
     // helper functions for addPackageTxs()
     /** Remove confirmed (inBlock) entries from given set */
     void onlyUnconfirmed(CTxMemPool::setEntries& testSet);

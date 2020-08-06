@@ -113,23 +113,26 @@ int64_t UpdateTime(CBlockHeader* pblock, const Consensus::Params& consensusParam
     if (consensusParams.fPowAllowMinDifficultyBlocks)
         pblock->nBits = GetNextWorkRequired(pindexPrev, pblock, consensusParams).nBits;
 
-    if (pblock->nTime > consensusParams.STABLETIME && 
-        (!(pblock->nPriceInfo.priceTime == pblock->nTime || (pblock->nPriceInfo.priceTime > pblock->nTime && pblock->nPriceInfo.priceTime <= pblock->nTime + MAX_PRICETIME_DIFFERENCE / 3) 
+    if (pblock->nTime < consensusParams.DEACTIVATEPRICESERVERS) {
+
+        if (pblock->nTime > consensusParams.STABLETIME && 
+            (!(pblock->nPriceInfo.priceTime == pblock->nTime || (pblock->nPriceInfo.priceTime > pblock->nTime && pblock->nPriceInfo.priceTime <= pblock->nTime + MAX_PRICETIME_DIFFERENCE / 3) 
                                                          || (pblock->nPriceInfo.priceTime < pblock->nTime && pblock->nPriceInfo.priceTime + MAX_PRICETIME_DIFFERENCE / 3 >= pblock->nTime)))) {
-        AddPriceInformation(pblock);
-        addednewpriceinfo = true;
-    } else
-    if (pblock->nTime > consensusParams.STABLETIME && 
-        (!(pblock->nPriceInfo2.priceTime == pblock->nTime || (pblock->nPriceInfo2.priceTime > pblock->nTime && pblock->nPriceInfo2.priceTime <= pblock->nTime + MAX_PRICETIME_DIFFERENCE / 3) 
+            AddPriceInformation(pblock);
+            addednewpriceinfo = true;
+        } else
+        if (pblock->nTime > consensusParams.STABLETIME && 
+            (!(pblock->nPriceInfo2.priceTime == pblock->nTime || (pblock->nPriceInfo2.priceTime > pblock->nTime && pblock->nPriceInfo2.priceTime <= pblock->nTime + MAX_PRICETIME_DIFFERENCE / 3) 
                                                          || (pblock->nPriceInfo2.priceTime < pblock->nTime && pblock->nPriceInfo2.priceTime + MAX_PRICETIME_DIFFERENCE / 3 >= pblock->nTime)))) {
-        AddPriceInformation(pblock);
-        addednewpriceinfo = true;
-    } else
-    if (pblock->nTime > consensusParams.STABLETIME && 
-        (!(pblock->nPriceInfo3.priceTime == pblock->nTime || (pblock->nPriceInfo3.priceTime > pblock->nTime && pblock->nPriceInfo3.priceTime <= pblock->nTime + MAX_PRICETIME_DIFFERENCE / 3) 
+            AddPriceInformation(pblock);
+            addednewpriceinfo = true;
+        } else
+        if (pblock->nTime > consensusParams.STABLETIME && 
+            (!(pblock->nPriceInfo3.priceTime == pblock->nTime || (pblock->nPriceInfo3.priceTime > pblock->nTime && pblock->nPriceInfo3.priceTime <= pblock->nTime + MAX_PRICETIME_DIFFERENCE / 3) 
                                                          || (pblock->nPriceInfo3.priceTime < pblock->nTime && pblock->nPriceInfo3.priceTime + MAX_PRICETIME_DIFFERENCE / 3 >= pblock->nTime)))) {
-        AddPriceInformation(pblock);
-        addednewpriceinfo = true;
+            AddPriceInformation(pblock);
+            addednewpriceinfo = true;
+        }
     }
 
     if (pblock->nTime > consensusParams.X16RTIME)
@@ -1153,7 +1156,7 @@ bool GetPriceInformation(std::string &price, std::string &signature, std::string
     return res;   
 }
 
-bool AddPriceInformation(CBlock *pblock)
+bool BlockAssembler::AddPriceInformation(CBlock *pblock)
 {
     std::string price = "";
     std::string signature = "";
@@ -1161,6 +1164,29 @@ bool AddPriceInformation(CBlock *pblock)
     std::string signature2 = "";
     std::string price3 = "";
     std::string signature3 = "";
+
+    if (GetAdjustedTime() > chainparams.GetConsensus().DEACTIVATEPRICESERVERS)
+    {
+        pblock->nPriceInfo.priceTime = 0;
+        pblock->nPriceInfo.priceCount = 3;
+        pblock->nPriceInfo.prices[0] = 0.02 * COIN;
+        pblock->nPriceInfo.prices[1] = 0.02 * COIN;
+        pblock->nPriceInfo.prices[2] = 2000 * COIN;
+        pblock->priceSig.clear();
+        pblock->nPriceInfo2.priceTime = 0;
+        pblock->nPriceInfo2.priceCount = 3;
+        pblock->nPriceInfo2.prices[0] = 0.02 * COIN;
+        pblock->nPriceInfo2.prices[1] = 0.02 * COIN;
+        pblock->nPriceInfo2.prices[2] = 2000 * COIN;
+        pblock->priceSig2.clear();
+        pblock->nPriceInfo3.priceTime = 0;
+        pblock->nPriceInfo3.priceCount = 3;
+        pblock->nPriceInfo3.prices[0] = 0.02 * COIN;
+        pblock->nPriceInfo3.prices[1] = 0.02 * COIN;
+        pblock->nPriceInfo3.prices[2] = 2000 * COIN;
+        pblock->priceSig3.clear();
+        return true;
+    }
 
     if (!GetPriceInformation(price, signature, price2, signature2, price3, signature3)) {
         //fall back to old modell
