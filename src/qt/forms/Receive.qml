@@ -35,39 +35,19 @@ ReceiveForm {
 
     function getmydollaraddress()
     {
-        if (receivingnickname.text==="")
-        {
-            return receivingaddressDo.text
-        } else
-        {
-            return receivingnicknameDo.text
-        }
+        return "";
     }
 
     function getmygoldaddress()
     {
-        if (receivingnickname.text==="")
-        {
-            return receivingaddressGo.text
-        } else
-        {
-            return receivingnicknameGo.text
-        }
+        return "";
     }
 
     function setreceivingaddressintern(address,nick) {
-        receivingaddress.text=address
-        receivingaddressDo.text="dollar@"+address
-        receivingaddressGo.text="gold@"+address
-        receivingnickname.text=nick
-        receivingnicknameDo.text="dollar"+nick
-        receivingnicknameGo.text="gold"+nick
-        receivingaddressEdit.text=address
-        receivingaddressEditDo.text="dollar@"+address
-        receivingaddressEditGo.text="gold@"+address
-        receivingnicknameEdit.text=nick
-        receivingnicknameEditDo.text="dollar"+nick
-        receivingnicknameEditGo.text="gold"+nick
+        receivingaddress.text=address        
+        receivingnickname.text=nick        
+        receivingaddressEdit.text=address        
+        receivingnicknameEdit.text=nick        
         if (nick===""){
            whitebox3.visible=true
            createnickname.visible=true
@@ -107,32 +87,7 @@ ReceiveForm {
             copynickname.leftPadding=20
             copynickname.iconname=""
         }, 3000);
-    }
-    copynicknameDo.onClicked: {
-        receivingnicknameEditDo.selectAll()
-        receivingnicknameEditDo.copy()
-        copynicknameDo.text=qsTr("Copied")
-        copynicknameDo.leftPadding= 46
-        copynicknameDo.iconname="../res/icons/checkblue.png"
-        timer.setTimeout(function(){
-            copynicknameDo.text=qsTr("Copy $ nickname to clipboard")
-            copynicknameDo.leftPadding=20
-            copynicknameDo.iconname=""
-        }, 3000);
-    }
-
-    copynicknameGo.onClicked: {
-        receivingnicknameEditGo.selectAll()
-        receivingnicknameEditGo.copy()
-        copynicknameGo.text=qsTr("Copied")
-        copynicknameGo.leftPadding= 46
-        copynicknameGo.iconname="../res/icons/checkblue.png"
-        timer.setTimeout(function(){
-            copynicknameGo.text=qsTr("Copy ⾦ nickname to clipboard")
-            copynicknameGo.leftPadding=20
-            copynicknameGo.iconname=""
-        }, 3000);
-    }
+    }    
     copyaddress.onClicked: {
         receivingaddressEdit.selectAll()
         receivingaddressEdit.copy()
@@ -144,31 +99,7 @@ ReceiveForm {
             copyaddress.leftPadding=20
             copyaddress.iconname=""
         }, 3000);
-    }
-    copyaddressDo.onClicked: {
-        receivingaddressEditDo.selectAll()
-        receivingaddressEditDo.copy()
-        copyaddressDo.text=qsTr("Copied")
-        copyaddressDo.leftPadding= 46
-        copyaddressDo.iconname="../res/icons/checkblue.png"
-        timer.setTimeout(function(){
-            copyaddressDo.text=qsTr("Copy $ address to clipboard")
-            copyaddressDo.leftPadding=20
-            copyaddressDo.iconname=""
-        }, 3000);
-    }
-    copyaddressGo.onClicked: {
-        receivingaddressEditGo.selectAll()
-        receivingaddressEditGo.copy()
-        copyaddressGo.text=qsTr("Copied")
-        copyaddressGo.leftPadding= 46
-        copyaddressGo.iconname="../res/icons/checkblue.png"
-        timer.setTimeout(function(){
-            copyaddressGo.text=qsTr("Copy ⾦ address to clipboard")
-            copyaddressGo.leftPadding=20
-            copyaddressGo.iconname=""
-        }, 3000);
-    }
+    }    
     createnickname.onClicked: gotocreatenicksignal()
     claimcoinsbtn.onClicked: claimlinkBtnSignalIntern(linkedit.text)
 }

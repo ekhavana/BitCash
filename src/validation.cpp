@@ -1311,35 +1311,51 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex, const Consensus
 
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
 {
-    int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
-    // Force block reward to zero when right shift is undefined.
-    if (halvings >= 64)
-        return 0;
-
-    CAmount nSubsidy = 19350 * MILLICOIN;
-    // Subsidy is cut in half every 2.100.000 blocks which will occur approximately every 4 years.
     if (nHeight==1)
     {
-        nSubsidy = 9700019350 * MILLICOIN; //9.7 millin coins premine
+        return 9700019350 * MILLICOIN; //9.7 millin coins premine
+    } else
+    if  (nHeight <= consensusParams.nSubsidyFirstInterval)
+    {
+        return 19350 * MILLICOIN;
     } else
     {
-        nSubsidy >>= halvings;
+
+        int halvings = (nHeight - consensusParams.nSubsidyFirstInterval) / consensusParams.nSubsidyHalvingInterval;
+        // Force block reward to zero when right shift is undefined.
+        if (halvings >= 64)
+            return 0;
+
+        CAmount nSubsidy = 7200 * MILLICOIN;
+        // Subsidy is cut in half every 4.20.000 blocks which will occur approximately every 8 years.
+        {
+            nSubsidy >>= halvings;
+        }
+        return nSubsidy;
     }
-    return nSubsidy;
 }
 
 CAmount GetBlockSubsidyDevs(int nHeight, const Consensus::Params& consensusParams)
 {
-    int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
-    // Force block reward to zero when right shift is undefined.
-    if (halvings >= 64)
-        return 0;
+    if  (nHeight <= consensusParams.nSubsidyFirstInterval)
+    {
+        return 2150 * MILLICOIN;
+    } else
+    {
 
-    CAmount nSubsidy = 2150 * MILLICOIN;
-    // Subsidy is cut in half every 2.100.000 blocks which will occur approximately every 4 years.
-    nSubsidy >>= halvings;
+        int halvings = (nHeight - consensusParams.nSubsidyFirstInterval) / consensusParams.nSubsidyHalvingInterval;
+        // Force block reward to zero when right shift is undefined.
+        if (halvings >= 64)
+            return 0;
 
-    return nSubsidy;
+        CAmount nSubsidy = 800 * MILLICOIN;
+        // Subsidy is cut in half every 4.20.000 blocks which will occur approximately every 8 years.
+        {
+            nSubsidy >>= halvings;
+        }
+        return nSubsidy;
+    }
+
 }
 
 bool IsInitialBlockDownload()

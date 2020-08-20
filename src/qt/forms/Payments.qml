@@ -968,7 +968,7 @@ Item {
                 id: senddollarCheckre
                 text: qsTr("Send Dollar")
                 anchors.verticalCenter: amountEdit.verticalCenter
-                visible: true
+                visible: false
                 font.weight: Font.DemiBold
                 font.pixelSize: 14
                 font.family: "Montserrat SemiBold"

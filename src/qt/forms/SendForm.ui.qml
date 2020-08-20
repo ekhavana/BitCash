@@ -703,6 +703,7 @@ Item {
                     id: printBtnDo
                     height: 44
                     text: qsTr("Print Dollar paper bills")
+                    visible: false
                     font.weight: Font.DemiBold
                     font.pixelSize: 14
                     leftPadding: 44
@@ -839,6 +840,7 @@ Item {
                 RadioButton {
                     id: radioButton1
                     text: qsTr("Send BitCash")
+                    visible: false
                     font.pixelSize: 13
                     font.weight: Font.Normal
                     font.family: "Montserrat"
@@ -851,6 +853,7 @@ Item {
                 RadioButton {
                     id: radioButton2
                     text: qsTr("Send Dollar")
+                    visible: false
                     font.pixelSize: 13
                     font.weight: Font.Normal
                     font.family: "Montserrat"
@@ -862,6 +865,7 @@ Item {
                 RadioButton {
                     id: radioButton3
                     text: qsTr("Send Gold")
+                    visible: false
                     font.pixelSize: 13
                     font.weight: Font.Normal
                     font.family: "Montserrat"
@@ -1478,6 +1482,7 @@ Item {
                 RadioButton {
                     id: radioButton1tw
                     text: qsTr("Send BitCash")
+                    visible: false
                     font.pixelSize: 13
                     font.weight: Font.Normal
                     font.family: "Montserrat"
@@ -1490,6 +1495,7 @@ Item {
                 RadioButton {
                     id: radioButton2tw
                     text: qsTr("Send Dollar")
+                    visible: false
                     font.pixelSize: 13
                     font.weight: Font.Normal
                     font.family: "Montserrat"
@@ -1501,6 +1507,7 @@ Item {
                 RadioButton {
                     id: radioButton3tw
                     text: qsTr("Send Gold")
+                    visible: false
                     font.pixelSize: 13
                     font.weight: Font.Normal
                     font.family: "Montserrat"
@@ -1802,6 +1809,7 @@ Item {
                 RadioButton {
                     id: radioButton1in
                     text: qsTr("Send BitCash")
+                    visible: false
                     font.pixelSize: 13
                     font.weight: Font.Normal
                     font.family: "Montserrat"
@@ -1814,6 +1822,7 @@ Item {
                 RadioButton {
                     id: radioButton2in
                     text: qsTr("Send Dollar")
+                    visible: false
                     font.pixelSize: 13
                     font.weight: Font.Normal
                     font.family: "Montserrat"
@@ -1825,6 +1834,7 @@ Item {
                 RadioButton {
                     id: radioButton3in
                     text: qsTr("Send Gold")
+                    visible: false
                     font.pixelSize: 13
                     font.weight: Font.Normal
                     font.family: "Montserrat"
@@ -2126,6 +2136,7 @@ Item {
                 RadioButton {
                     id: radioButton1re
                     text: qsTr("Send BitCash")
+                    visible: false
                     font.pixelSize: 13
                     font.weight: Font.Normal
                     font.family: "Montserrat"
@@ -2138,6 +2149,7 @@ Item {
                 RadioButton {
                     id: radioButton2re
                     text: qsTr("Send Dollar")
+                    visible: false
                     font.pixelSize: 13
                     font.weight: Font.Normal
                     font.family: "Montserrat"
@@ -2149,6 +2161,7 @@ Item {
                 RadioButton {
                     id: radioButton3re
                     text: qsTr("Send Gold")
+                    visible: false
                     font.pixelSize: 13
                     font.weight: Font.Normal
                     font.family: "Montserrat"
@@ -2298,6 +2311,7 @@ Item {
                     font.weight: Font.Normal
                     font.family: "Montserrat"
                     text: qsTr("Send BitCash")
+                    visible: false
                     checked: true
                     anchors.left: parent.left
                     anchors.leftMargin: 30
@@ -2310,6 +2324,7 @@ Item {
                     font.weight: Font.Normal
                     font.family: "Montserrat"
                     text: qsTr("Send Dollar")
+                    visible: false
                     anchors.left: radioButton1an.right
                     anchors.leftMargin: 8
                     anchors.top: infolabelan.bottom
@@ -2321,6 +2336,7 @@ Item {
                     font.weight: Font.Normal
                     font.family: "Montserrat"
                     text: qsTr("Send Gold")
+                    visible: false
                     anchors.left: radioButton2an.right
                     anchors.leftMargin: 8
                     anchors.top: infolabelan.bottom

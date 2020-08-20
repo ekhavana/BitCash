@@ -136,8 +136,7 @@ Item {
     {
         paperbillselect.visible = false
         paperbillselectbitcash.visible = false
-        backupwallet.visible = false
-        trading.visible = false
+        backupwallet.visible = false        
         paperwallet.visible = false
     }
 
@@ -154,11 +153,6 @@ Item {
         deactivateallwindows()
         backupwallet.visible=true
         backupwallet.tabBar.currentIndex=0
-    }
-
-    function opentradingwindow(msg) {
-        deactivateallwindows()
-        trading.visible = true
     }
 
     function openbillselectwindow(msg) {
@@ -196,8 +190,7 @@ Item {
         send.setbacksendbtnintern()  
         send.displayerrormessageintern(msg)
         receive.displayerrormessageintern(msg)
-        payments.displayerrormessageintern(msg)
-        trading.displayerrormessageintern(msg)
+        payments.displayerrormessageintern(msg)        
         instaswap.displayerrormessageintern(msg)
     }
 
@@ -377,7 +370,7 @@ Item {
         payments.addpaymentsintern(id,recipient, desc,amount, day, month,currency)
     }
     function addorder(id, amount, target, senddollar, whenabove) {
-        trading.addorderintern(id, amount, target, senddollar, whenabove)
+
     }
     function bitcashexpressclaimed() {        
         receive.bitcashexpressclaimedintern()
@@ -389,13 +382,13 @@ Item {
         payments.clearpaymentfieldsintern(msg)
     }
     function clearorderfields(msg) {
-        trading.clearorderfieldsintern(msg)
+
     }
     function clearpaymentlistmodel() {
         payments.clearpaymentlistmodelintern()
     }
     function clearorderlistmodel() {
-        trading.clearorderslistmodelintern()
+
     }
     function clearlinklistmodel() {
         transactions.clearlinklistmodelintern();
@@ -982,13 +975,6 @@ Item {
         onPrintpaperwalletSignalintern: printpaperwalletSignal()
         onBackupwalletfileSignalintern: backupwalletfileSignal()
         onImportkeySignalintern: importkeySignal(key, fromwebwallet)
-    }
-
-    Trading
-    {
-        id: trading
-        onCreateOrderBtnSignalIntern: createOrderBtnSignal(amounttosend, targetPrice, senddollar, whenpricegoesabove)
-        onDeleteordersignalintern: deleteordersignal(idstr)
     }
 
     TwitterSuccess

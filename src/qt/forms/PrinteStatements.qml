@@ -199,6 +199,7 @@ Item {
     RadioButton {
         id: radioButtonBitCash
         text: qsTr("Print BitCash statement")
+        visible: false
         checked: true
         anchors.top: spinBox.bottom
         anchors.topMargin: 30
@@ -211,6 +212,7 @@ Item {
         x: 5
         y: 6
         text: qsTr("Print BitCash Dollar statement")
+        visible: false
         checked: false
         anchors.top: radioButtonBitCash.bottom
         anchors.topMargin: 0
