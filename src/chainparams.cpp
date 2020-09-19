@@ -570,13 +570,79 @@ public:
         nDefaultPort = 18534;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1546865679, 2, 0x207fffff, 24, 1, 21500 * MILLICOIN, "a34b335c0124bd7c0100000000", "MEQCIEiAA0H7qfQ0Y5A9vHP96pUz8SLQXxW1vsMf+39Wrs+6AiA56R3hoKHjlfivLWtu2QXXW7A6dCxLeBrKjnUqEvfnig==");
+        genesis = CreateGenesisBlock(1531846965, 0x1f, 0x207fffff, 16, 1, 21500 * MILLICOIN, "a34b335c0124bd7c0100000000", "MEQCIEiAA0H7qfQ0Y5A9vHP96pUz8SLQXxW1vsMf+39Wrs+6AiA56R3hoKHjlfivLWtu2QXXW7A6dCxLeBrKjnUqEvfnig==");
+
+// ******* BEGIN GENERATE GENESIS BLOCK ********
+
+/*        genesis.nNonce=0;
+        bool cycle_found = false;
+        std::set<uint32_t> cycle;
+        ctpl::thread_pool pool{1};
+        int nMaxTries=10000;
+        static const int nInnerLoopCount = 0x10000;
+            std::cout << "Start loop " << std::endl;
+        while (nMaxTries > 0
+                && genesis.nNonce < nInnerLoopCount
+                && !cuckoo::FindProofOfWorkAdvanced(
+                    genesis.GetHash(),
+                    genesis.nBits,
+                    genesis.nEdgeBits,
+                    cycle,
+                    consensus,
+                    1,
+                    cycle_found,
+                    &pool)) {
+
+            std::cout << "One loop " << std::endl;
+            ++genesis.nNonce;
+            --nMaxTries;
+        }
+
+        if (cycle_found)
+        std::cout << "cycle found " << std::endl;else
+        std::cout << "cycle not found " << std::endl;
+
+    std::stringstream cycleStr;
+    auto it = cycle.begin();
+
+    while (it != cycle.end()) {
+        std::cout << "0x" << std::hex << *it;
+        if(++it != cycle.end()) {
+	    std::cout << ", ";
+        }
+    } ;
+
+//    return cycleStr.str();
+        std::cout << std::endl << "Genesis Block Nonce: 0x" << genesis.nNonce << std::endl;
+if         (genesis.nEdgeBits==16) 
+        std::cout << "EdgeBits 16 " << std::endl;else
+        std::cout << "EdgeBits NOT 16 " << std::endl;
+        genesis.sCycle = cycle;
+
+        std::cout << "nCuckooProofSize:" << genesis.sCycle.size() << std::endl;
         consensus.hashGenesisBlock = genesis.GetHash();
 
-//        std::cout << "REGTEST bitcash new hashGenesisBlock hash: " << genesis.GetHash().ToString() << std::endl;
+if (cuckoo::VerifyProofOfWork(genesis.GetHash(), genesis.nBits, genesis.nEdgeBits, genesis.sCycle, consensus))
+        std::cout << "Verfified" << std::endl;else
+        std::cout << "Not verfified" << std::endl;
+        std::cout << "bitcash new hashMerkleRoot hash: " << genesis.hashMerkleRoot.ToString() << std::endl;
+        std::cout << std::endl<< "bitcash new hashGenesisBlock hash: " << genesis.GetHash().ToString() << std::endl;
+*/
+// ****** END GENERATE GENESIS BLOCK ********
 
-        assert(consensus.hashGenesisBlock == uint256S("0x0f9188f13cb7b2c71f2a335e3a4fc328bf5beb436012afca590b1a11466e2206"));
-        assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+        genesis.sCycle = {
+0xdf, 0x56e, 0xadc, 0xbd9, 0xc3b, 0xde4, 0x136a, 0x1a42, 0x1b98, 0x21f2, 0x2621, 0x2840, 0x2cdb, 0x3e02, 0x4b87, 0x560b, 0x57a0, 0x6027, 0x62cc, 0x6f8a, 0x75a9, 0x773a, 0x7cde, 0x8372, 0x8478, 0x8dda, 0x9f72, 0xa68b, 0xa6da, 0xae71, 0xb67f, 0xb973, 0xbad3, 0xbe06, 0xc0a5, 0xc171, 0xd185, 0xd39f, 0xde16, 0xe47c, 0xed87, 0xfe8b
+        };
+
+        consensus.hashGenesisBlock = genesis.GetHash();
+//        std::cout << "TESTNET bitcash new hashGenesisBlock hash: " << genesis.GetHash().ToString() << std::endl;
+/*
+        std::cout << "bitcash new hashMerkleRoot hash: " << genesis.hashMerkleRoot.ToString() << std::endl;
+        std::cout << "Genesis Block Nonce: 0x" << genesis.nNonce << std::endl;
+        std::cout << std::endl<< "bitcash new hashGenesisBlock hash: " << genesis.GetHash().ToString() << std::endl;*/
+
+        assert(consensus.hashGenesisBlock == uint256S("0x50d97c38f8a673c4758718d4900bef9192f0318a8aa9ee415eeb27c3c431ff43"));
+        assert(genesis.hashMerkleRoot == uint256S("0xaac1dca23e43e68fe32133292a4698f42f60a48e5321bef9bda0c95f3580b667"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
@@ -588,7 +654,7 @@ public:
 
         checkpointData = {
             {
-                {0, uint256S("0f9188f13cb7b2c71f2a335e3a4fc328bf5beb436012afca590b1a11466e2206")},
+                {0, uint256S("0x50d97c38f8a673c4758718d4900bef9192f0318a8aa9ee415eeb27c3c431ff43")},
             }
         };
 
