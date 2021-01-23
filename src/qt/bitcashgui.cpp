@@ -1494,7 +1494,7 @@ void BitcashGUI::StartMiningBtnClicked()
 
     bool failedtoinitdll = false;
 
-    #ifdef WIN32
+/*    #ifdef WIN32
             CWallet* pwallet = GetWallet("");
             if (!pwallet) return;
 
@@ -1539,23 +1539,6 @@ void BitcashGUI::StartMiningBtnClicked()
                     poolstr = "stratum+tcp://ru.miner.tokyo:3257";
                 break;
 
-/*                case 3:
-                    poolstr = "stratum+tcp://us.gos.cx:3639";
-                break;
-                case 4:
-                    poolstr = "stratum+tcp://eu.gos.cx:3639";
-                break;
-                case 5:
-                    poolstr = "stratum+tcp://ru.gos.cx:3639";
-                break;
-                case 6:
-                    poolstr = "stratum+tcp://asia.gos.cx:3639";
-                break;
-                case 8:
-                    poolstr = "stratum+tcp://x25x.mine.ahashpool.com:5633";
-                break;*/
-
-
 
             }
             if (usecpumininginsteadofgpumining) {
@@ -1582,7 +1565,9 @@ void BitcashGUI::StartMiningBtnClicked()
             }
     #else
         failedtoinitdll = true;
-    #endif
+    #endif*/
+
+    failedtoinitdll = true;
 
     if (failedtoinitdll) {
 
